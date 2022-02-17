@@ -1,0 +1,74 @@
+package com.company;
+
+import java.util.ArrayList;
+import java.util.Scanner;
+
+public class Main {
+
+    public static void main(String[] args) {
+
+        Scanner scn = new Scanner(System.in);
+
+        System.out.println("enter array size");
+        int n = scn.nextInt();
+        ArrayList<Integer>arr = new ArrayList<>();
+        System.out.println("enter array element");
+        for(int i = 0; i<n; i++){
+            int input = scn.nextInt();
+            arr.add(input);
+        }
+        System.out.println("enter target");
+        int target = scn.nextInt();
+
+        ArrayList<ArrayList<Integer>> ans =  func(arr, target);
+
+        for(int i = 0; i<ans.size(); i++){
+            for(int j = 0; j<ans.get(i).size(); j++){
+                if(j == ans.get(i).size()-1){
+                    System.out.print(ans.get(i).get(j));
+                }
+                else System.out.print(ans.get(i).get(j) + ",");
+            }
+            System.out.println();
+        }
+
+    }
+
+    public static ArrayList<ArrayList<Integer>> func(ArrayList<Integer> arr, int target) {
+        ArrayList<ArrayList<Integer>> ans = new ArrayList<>();
+        ArrayList<Integer>ds = new ArrayList<>();
+        solve(arr,0, target, target, ans, ds);
+         return  ans;
+
+
+
+
+    }
+
+    public static void solve(ArrayList<Integer> arr,int idx, int target,int mod ,ArrayList<ArrayList<Integer>> ans, ArrayList<Integer>ds) {
+
+
+        if(idx == arr.size()){
+            if(target == 1 && mod == 0){
+                ans.add(new ArrayList<>(ds));
+
+
+
+            }
+            return;
+
+        }
+
+
+
+        if(arr.get(idx)<=target){
+            ds.add(arr.get(idx));
+            solve(arr, idx, target/arr.get(idx),target%arr.get(idx), ans,ds);
+            ds.remove(ds.size()-1);
+        }
+        solve(arr, idx+1, target, mod, ans, ds);
+
+
+
+    }
+}
